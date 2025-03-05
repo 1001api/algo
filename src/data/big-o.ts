@@ -44,6 +44,11 @@ export const bigOInitialData: ChartData = {
 };
 
 export const bigOOptions: ChartOptions = {
+	elements: {
+		line: {
+			tension: 0.4
+		}
+	},
 	plugins: {
 		legend: {
 			labels: {
@@ -55,6 +60,7 @@ export const bigOOptions: ChartOptions = {
 	},
 	scales: {
 		y: {
+			type: 'logarithmic',
 			grid: {
 				color: "rgb(255, 255, 255, 0.3)",
 				lineWidth: 0.5,
@@ -64,7 +70,6 @@ export const bigOOptions: ChartOptions = {
 				text: "Time taken in millisecond",
 				color: "yellow"
 			},
-			beginAtZero: true,
 			ticks: {
 				color: "rgb(255, 255, 255, 0.8)",
 			}
@@ -145,16 +150,20 @@ function arrayOfPairs(n: number) {
 	},
 	{
 		code: `
-function factorial(n: number) {
-	if (n === 0) return 1;
+export function factorial(n: number): number {
+	let factorial = 1;
 
-	let result = n;
-
-	for (let i = 0; i < n; i++) {
-		result = n * factorial(i);
+	for (let i = 2; i <= n; i++) {
+		factorial *= i;
 	}
 
-	return result;
+	let count = 0;
+
+	for (let i = 0; i < factorial; i++) {
+		count++;
+	}
+
+	return count;
 }
     `,
 		title: BIGO_TITLE.FACTORIAL
@@ -189,14 +198,30 @@ export function arrayOfPairs(n: number) {
 	return result;
 }
 
-export function factorial(n: number) {
+export function factorial_old(n: number) {
 	if (n === 0) return 1;
 
 	let result = n;
 
 	for (let i = 0; i < n; i++) {
-		result = n * factorial(i);
+		result = n * factorial_old(i);
 	}
 
 	return result;
+}
+
+export function factorial(n: number): number {
+	let factorial = 1;
+
+	for (let i = 2; i <= n; i++) {
+		factorial *= i;
+	}
+
+	let count = 0;
+
+	for (let i = 0; i < factorial; i++) {
+		count++;
+	}
+
+	return count;
 }

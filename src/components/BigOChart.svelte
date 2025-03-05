@@ -93,8 +93,6 @@
 			const uniqX = [...new Set(merged)].sort((a, b) => a - b);
 			chart.data.labels = uniqX; // update x data
 
-			console.log(chart.data);
-
 			chart.update();
 		}
 	});

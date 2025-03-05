@@ -20,7 +20,8 @@ function measurePerformance(fn: (input: number) => void, input: number): number 
 	const start = performance.now();
 	fn(input);
 	const end = performance.now();
-	return end - start;
+	const res = end - start;
+	return res === 0 ? 0.001 : res;
 }
 
 const algorithmMap = {

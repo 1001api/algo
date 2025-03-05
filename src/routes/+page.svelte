@@ -6,6 +6,7 @@
 	import Highlighter from "../components/Highlighter.svelte";
 	import BigOChart from "../components/BigOChart.svelte";
 	import MainNavbar from "../components/navbars/MainNavbar.svelte";
+	import { gamma } from "mathjs";
 
 	// The title of the choosen algorithm
 	// this variable has a responsibility
@@ -27,6 +28,9 @@
 
 	// state to manage user "N" input
 	let inputValue: number = $state(0);
+
+	// factorial derived inputValue
+	let factorialValue: number = $derived(gamma(inputValue + 1));
 
 	// loading state
 	let loading: boolean = $state(false);
@@ -69,6 +73,45 @@
 		};
 	}
 
+	async function playExample() {
+		const dataset = [
+			1, 5, 10, 11, 12, 13, 15, 50, 100, 500, 1000, 5000, 10000, 100000,
+			1000000,
+		];
+
+		for (const v of dataset) {
+			changeActiveAlgo(BIGO_TITLE.ADD_UP_TO_MATH);
+			inputValue = v;
+			await calculate();
+			await sleep(100);
+		}
+
+		for (const v of dataset) {
+			changeActiveAlgo(BIGO_TITLE.ADD_UP_TO_LOOP);
+			inputValue = v;
+			await calculate();
+			await sleep(400);
+		}
+
+		for (const v of dataset.slice(0, 13)) {
+			changeActiveAlgo(BIGO_TITLE.ARRAY_OF_PAIRS);
+			inputValue = v;
+			await calculate();
+			await sleep(500);
+		}
+
+		for (const v of dataset.slice(0, 6)) {
+			changeActiveAlgo(BIGO_TITLE.FACTORIAL);
+			inputValue = v;
+			await calculate();
+			await sleep(700);
+		}
+	}
+
+	function sleep(ms: number) {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
+
 	function updateData(x: number, y: number, activeTitle: string): void {
 		const i = data.findIndex((v) => v.title === activeTitle);
 		const newValue = { title: activeTitle, x: [x], y: [y] };
@@ -107,7 +150,7 @@
 			<!-- First algorithm -->
 			<button
 				onclick={() => changeActiveAlgo(BIGO_TITLE.ADD_UP_TO_LOOP)}
-				class={`btn flex gap-2 ${
+				class={`btn btn-sm flex gap-2 ${
 					activeTitle === BIGO_TITLE.ADD_UP_TO_LOOP
 						? "btn-primary"
 						: undefined
@@ -120,7 +163,7 @@
 			<!-- Second algorithm -->
 			<button
 				onclick={() => changeActiveAlgo(BIGO_TITLE.ADD_UP_TO_MATH)}
-				class={`btn flex gap-2 ${
+				class={`btn btn-sm flex gap-2 ${
 					activeTitle === BIGO_TITLE.ADD_UP_TO_MATH
 						? "btn-primary"
 						: undefined
@@ -133,7 +176,7 @@
 			<!-- Third algorithm -->
 			<button
 				onclick={() => changeActiveAlgo(BIGO_TITLE.ARRAY_OF_PAIRS)}
-				class={`btn flex gap-2 ${
+				class={`btn btn-sm flex gap-2 ${
 					activeTitle === BIGO_TITLE.ARRAY_OF_PAIRS
 						? "btn-primary"
 						: undefined
@@ -148,7 +191,8 @@
 			<!-- Fourth algorithm -->
 			<button
 				onclick={() => changeActiveAlgo(BIGO_TITLE.FACTORIAL)}
-				class="btn flex gap-2 {activeTitle === BIGO_TITLE.FACTORIAL
+				class="btn btn-sm flex gap-2 {activeTitle ===
+				BIGO_TITLE.FACTORIAL
 					? 'btn-primary'
 					: undefined}"
 			>
@@ -160,7 +204,7 @@
 		<!-- Divider horizontal -->
 		<div class="divider divider-horizontal"></div>
 
-		<div class="flex items-center gap-4">
+		<div class="flex items-start gap-4">
 			<!-- Plot N Input -->
 			<div class="form-control w-full max-w-xs">
 				<input
@@ -176,19 +220,44 @@
 
 				<!-- Label Input -->
 				<label class="label" for="plot-input">
-					<span class="label-text-alt"
-						>{activeTitle === BIGO_TITLE.ADD_UP_TO_LOOP &&
-						inputValue >= 1000000000000
-							? "Did you know that 1 trillion loop takes approximately 4 hours to complete? 😳"
-							: ""}
+					<span class="label-text-alt text-xs">
+						{#if activeTitle == BIGO_TITLE.ADD_UP_TO_LOOP}
+							Approximately {inputValue} Loop
+						{:else if activeTitle == BIGO_TITLE.ADD_UP_TO_MATH}
+							Approximately 1 Loop
+						{:else if activeTitle == BIGO_TITLE.ARRAY_OF_PAIRS}
+							Approximately {inputValue ** 2} Loop
+						{:else if activeTitle == BIGO_TITLE.FACTORIAL}
+							Approximately {factorialValue} Loop
+						{/if}
 					</span>
 				</label>
 			</div>
 
-			<!-- Spinner -->
-			{#if loading}
-				<Spinner />
-			{/if}
+			<div class="flex items-center gap-4">
+				<button onclick={() => playExample()} class="btn flex gap-2">
+					<div class="text-yellow-300">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							class="size-5"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm14.024-.983a1.125 1.125 0 0 1 0 1.966l-5.603 3.113A1.125 1.125 0 0 1 9 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113Z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+					</div>
+					<p>Play Predefined Example</p>
+				</button>
+
+				<!-- Spinner -->
+				{#if loading}
+					<Spinner />
+				{/if}
+			</div>
 		</div>
 	</section>
 
