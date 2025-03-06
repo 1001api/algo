@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { bigOInitialData, bigOOptions, BIGO_TITLE } from "../data/big-o";
+	import {
+		BIGO_TITLE,
+		bigOOutputInitialData,
+		bigOOutputOptions,
+	} from "../data/big-o";
 	import Chart from "chart.js/auto";
 
 	interface Props {
 		// Input of the data from the parent
-		data: { title: string; x: number[]; y: number[] }[];
+		data: { title: string; x: number[]; y: number[]; output: number[] }[];
 		activeTitle: string;
 	}
 
@@ -26,8 +30,8 @@
 		// initialize chart.js using empty data
 		chart = new Chart(canvas, {
 			type: "line",
-			data: bigOInitialData,
-			options: bigOOptions,
+			data: bigOOutputInitialData,
+			options: bigOOutputOptions,
 		});
 	});
 
@@ -64,35 +68,35 @@
 			// Whenever input changes, the chart should react (updating data)
 			switch (activeTitle) {
 				case BIGO_TITLE.ADD_UP_TO_LOOP:
-					chart.data.datasets[0].data = current.y;
+					chart.data.datasets[0].data = current.output;
 					break;
 
 				case BIGO_TITLE.ADD_UP_TO_MATH:
-					chart.data.datasets[1].data = current.y;
+					chart.data.datasets[1].data = current.output;
 					break;
 
 				case BIGO_TITLE.ARRAY_OF_PAIRS:
-					chart.data.datasets[2].data = current.y;
+					chart.data.datasets[2].data = current.output;
 					break;
 
 				case BIGO_TITLE.CUBIC_LOOP:
-					chart.data.datasets[3].data = current.y;
+					chart.data.datasets[3].data = current.output;
 					break;
 
 				case BIGO_TITLE.COUNT_DIGITS:
-					chart.data.datasets[4].data = current.y;
+					chart.data.datasets[4].data = current.output;
 					break;
 
 				case BIGO_TITLE.RECURSIVE_LOG_SUM:
-					chart.data.datasets[5].data = current.y;
+					chart.data.datasets[5].data = current.output;
 					break;
 
 				case BIGO_TITLE.RECURSIVE_FIB:
-					chart.data.datasets[6].data = current.y;
+					chart.data.datasets[6].data = current.output;
 					break;
 
 				case BIGO_TITLE.FACTORIAL:
-					chart.data.datasets[7].data = current.y;
+					chart.data.datasets[7].data = current.output;
 					break;
 
 				default:
@@ -113,6 +117,6 @@
 	});
 </script>
 
-<div class="w-full rounded-xl bg- px-4 py-2">
+<div class="w-full rounded-xl bg-base-100 px-4 py-2">
 	<canvas bind:this={canvasRef} width="300" height="200"></canvas>
 </div>

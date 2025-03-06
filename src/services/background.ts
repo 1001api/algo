@@ -3,7 +3,11 @@ import {
 	addUpToMath,
 	arrayOfPairs,
 	BIGO_TITLE,
-	factorial
+	countDigits,
+	cubicLoop,
+	factorial,
+	fib,
+	sumLog
 } from "../data/big-o";
 
 export interface WorkerMessage {
@@ -28,6 +32,10 @@ const algorithmMap = {
 	[BIGO_TITLE.ADD_UP_TO_LOOP]: addUpToLoop,
 	[BIGO_TITLE.ADD_UP_TO_MATH]: addUpToMath,
 	[BIGO_TITLE.ARRAY_OF_PAIRS]: arrayOfPairs,
+	[BIGO_TITLE.COUNT_DIGITS]: countDigits,
+	[BIGO_TITLE.RECURSIVE_LOG_SUM]: sumLog,
+	[BIGO_TITLE.RECURSIVE_FIB]: fib,
+	[BIGO_TITLE.CUBIC_LOOP]: cubicLoop,
 	[BIGO_TITLE.FACTORIAL]: factorial
 };
 

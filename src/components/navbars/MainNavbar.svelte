@@ -30,7 +30,7 @@
   let { activeIndex }: Props = $props();
 </script>
 
-<div class="navbar p-0 px-4 lg:px-10 bg-gray-700 shadow-sm">
+<div class="navbar min-h-[50px] p-0 px-4 lg:px-10 bg-gray-700">
   <div class="hidden md:flex md:flex-1">
     <a href="/" class="font-bold text-xl"
       >Algo<span class="text-amber-500">V</span></a
@@ -42,7 +42,7 @@
         <li>
           <a
             href={v.path}
-            class={`menu text-xs hover:bg-base-100 w-full ${activeIndex === v.id ? "bg-base-200" : ""}`}
+            class={`menu text-xs hover:bg-base-100 w-full ${activeIndex === v.id ? "bg-base-200 shadow-lg" : ""}`}
             >{v.title}</a
           >
         </li>
