@@ -19,7 +19,7 @@
     {
       id: 2,
       title: "Path Finding Algorithm",
-      path: "/path-finding",
+      path: "/path",
     },
   ];
 
