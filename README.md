@@ -1,3 +1,5 @@
+![banner](https://i.imgur.com/7aiUSfa.png)
+
 # Algorithm Visualizer
 
 An interactive web application for visualizing algorithms and data structures, built with SvelteKit 5 and TypeScript. This project provides real-time visual demonstrations of Big O complexity, sorting algorithms, and pathfinding algorithms.
