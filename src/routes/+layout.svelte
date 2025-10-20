@@ -3,4 +3,8 @@
 	let { children } = $props();
 </script>
 
+<svelte:head>
+	<title>Algo Visualizer by TenOhOne</title>
+</svelte:head>
+
 {@render children()}
